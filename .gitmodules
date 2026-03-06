@@ -1,0 +1,3 @@
+[submodule "vendor/sdc-smart-web-messaging"]
+	path = vendor/sdc-smart-web-messaging
+	url = https://github.com/brianpos/sdc-smart-web-messaging.git

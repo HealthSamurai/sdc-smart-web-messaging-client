@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["@types/fhir", "@playwright/test", "@types/node", "@types/react", "@types/react-dom"],
+    "baseUrl": "..",
+    "paths": {
+      "sdc-smart-web-messaging-client/react": ["src/react.ts"],
+      "sdc-smart-web-messaging-client": ["src/index.ts"],
+      "sdc-smart-web-messaging": ["vendor/sdc-smart-web-messaging/src/index.ts"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}
