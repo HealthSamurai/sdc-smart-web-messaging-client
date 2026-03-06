@@ -2,6 +2,23 @@ import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
+const EMPTY_DTS = "export {}";
+const DTS_REPLACEMENTS: Array<[suffix: string, content: string]> = [
+  ["dist/index.d.ts", "export * from './src/index';\n"],
+  [
+    "dist/react.d.ts",
+    [
+      'import type { UseSmartMessagingOptions, UseSmartMessagingResult } from "./index";',
+      'export * from "./index";',
+      'export type { UseSmartMessagingOptions, UseSmartMessagingResult } from "./index";',
+      "export declare function useSmartMessaging(",
+      "  options: UseSmartMessagingOptions,",
+      "): UseSmartMessagingResult;",
+      "",
+    ].join("\n"),
+  ],
+];
+
 export default defineConfig({
   resolve: {
     alias: {
@@ -12,8 +29,9 @@ export default defineConfig({
     dts({
       rollupTypes: true,
       beforeWriteFile: (filePath, content) => {
-        if (filePath.endsWith("dist/index.d.ts") && content.trim() === "export {}") {
-          return { filePath, content: "export * from './src/index';\n" };
+        const replacement = DTS_REPLACEMENTS.find(([suffix]) => filePath.endsWith(suffix));
+        if (replacement && content.trim() === EMPTY_DTS) {
+          return { filePath, content: replacement[1] };
         }
       },
     }),

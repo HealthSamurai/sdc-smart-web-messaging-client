@@ -22,4 +22,6 @@ export type {
   SmartMessagingError,
   SmartMessagingOptions,
   SmartMessagingState,
+  UseSmartMessagingOptions,
+  UseSmartMessagingResult,
 } from "./types";
